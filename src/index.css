@@ -1,0 +1,8 @@
+:root{
+	--light-yellow: #f0ead2;
+	--gray-brown: #6c584c;
+}
+
+body{
+	background-color: var(--light-yellow);
+}
