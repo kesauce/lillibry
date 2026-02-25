@@ -1,0 +1,8 @@
+.nav{
+    background-color: var(--yellow-green);
+    height: 5vh;
+    width: 30vw;
+    margin: auto;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+}
