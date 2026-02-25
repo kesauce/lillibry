@@ -1,19 +1,22 @@
-import { useState } from 'react'
-import '../styles/Login.css'
+import "../styles/Login.css";
+import { SignedIn, SignedOut, SignIn, SignUp, UserButton } from '@clerk/clerk-react';
 
 function Login() {
-
-	return (
-		<div class="login">
+    return (
+        <div className="login">
             <h1>lillibry</h1>
-            <form>
-                <label>Username</label>
-                <input></input>
-                <label>Password</label>
-                <input></input>
-            </form>
-		</div>
-	)
+            <header>
+                {/* Show the sign-in and sign-up buttons when the user is signed out */}
+                <SignedOut>
+                    <SignIn />
+                </SignedOut>
+                {/* Show the user button when the user is signed in */}
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
+            </header>
+        </div>
+    );
 }
 
-export default Login
+export default Login;

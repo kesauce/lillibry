@@ -1,8 +1,16 @@
-:root{
-	--light-yellow: #f0ead2;
-	--gray-brown: #6c584c;
+@import url('https://fonts.googleapis.com/css2?family=Radley:ital@0;1&display=swap');
+
+:root {
+    --light-yellow: #f0ead2;
+    --gray-brown: #6c584c;
+	--light-yellow-green: #dde5b6;
 }
 
-body{
-	background-color: var(--light-yellow);
+@font-face {
+    font-family: "moontime";
+    src: url("./assets/fonts/moontime.ttf");
+}
+
+body {
+    background-color: var(--light-yellow);
 }
