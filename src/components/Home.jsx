@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 function Homepage() {
     return (
         <div className="homepage">
-            <h1>lillibry</h1>
             <header>
                 <SignedOut>
                     <Navigate to="/login" />
