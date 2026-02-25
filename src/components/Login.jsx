@@ -1,5 +1,5 @@
 import "../styles/Auth.css";
-import { SignedIn, SignedOut, SignIn, SignUp, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignIn, UserButton } from '@clerk/clerk-react';
 
 function Login() {
     return (

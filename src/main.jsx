@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
+import Homepage from "./components/Home.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,12 +15,13 @@ createRoot(document.getElementById("root")).render(
     <StrictMode>
         <ClerkProvider
             publishableKey={PUBLISHABLE_KEY}
-            signInUrl="/"
+            signInUrl="/login"
             signUpUrl="/register"
         >
             <BrowserRouter>
                 <Routes>
-                    <Route index element={<Login />} />
+					<Route index element={<Homepage />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Routes>
             </BrowserRouter>

@@ -1,18 +1,17 @@
 import "../styles/Auth.css";
-import { SignedIn, SignedOut, SignUp, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignUp } from '@clerk/clerk-react';
+import { Navigate } from "react-router-dom";
 
 function Register() {
     return (
         <div className="login">
             <h1>lillibry</h1>
             <header>
-                {/* Show the sign-in and sign-up buttons when the user is signed out */}
                 <SignedOut>
                     <SignUp />
                 </SignedOut>
-                {/* Show the user button when the user is signed in */}
                 <SignedIn>
-                    <UserButton />
+                    <Navigate to="/homepage" />
                 </SignedIn>
             </header>
         </div>
