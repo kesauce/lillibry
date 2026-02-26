@@ -1,4 +1,3 @@
-// import "../styles/Auth.css";
 import Shelves from "../components/Shelves.jsx";
 import Nav from "../components/Nav.jsx";
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
