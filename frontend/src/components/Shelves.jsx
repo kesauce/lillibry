@@ -25,16 +25,16 @@ function Shelves() {
                 slideToClickedSlide={true}
             >
                 <SwiperSlide>
-                    <Shelf />
+                    <Shelf name="Read"/>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Shelf />
+                    <Shelf name="To Read"/>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Shelf />
+                    <Shelf name="Reading"/>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <Shelf />
+                    <Shelf name="Dropped"/>
                 </SwiperSlide>
             </Swiper>
         </div>

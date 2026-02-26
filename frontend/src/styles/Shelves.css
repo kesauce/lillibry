@@ -6,6 +6,15 @@
     margin-top: 1rem;
 }
 
+.shelf h1{
+    margin: 0;
+    padding: 0;
+    font-family: "Radley";
+    font-size: 2rem;
+    color: var(--light-yellow);
+    text-align: center;
+}
+
 .shelf-row{
     background-color: var(--gray-brown);
     height: 10rem;

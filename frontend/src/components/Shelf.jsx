@@ -1,7 +1,7 @@
 import "../styles/Shelves.css";
 import Book from "../components/Book.jsx";
 
-function Shelf() {
+function Shelf({name}) {
     return (
         <div className="shelf">
             <div className="shelf-row">
@@ -13,6 +13,7 @@ function Shelf() {
             <div className="shelf-row">
                 <Book title="book3" />
             </div>
+            <h1 className="shelf-name">{name}</h1>
         </div>
     );
 }
