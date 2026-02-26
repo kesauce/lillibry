@@ -12,13 +12,24 @@ function Shelves() {
             <Swiper
                 modules={[Navigation, Pagination]}
                 cssMode={true}
-                loop={true}
+                // loop={true}
                 pagination={{ clickable: true }}
-                navigation={true}
-                slidesPerView={1}
+                navigation={false}
+                slidesPerView={1.40}
                 centeredSlides={true}
-                spaceBetween={24}
+                // spaceBetween={24}
+                breakpoints={{
+                    0: { slidesPerView: 1 },
+                    700: { slidesPerView: 1.4 },
+                }}
+                slideToClickedSlide={true}
             >
+                <SwiperSlide>
+                    <Shelf />
+                </SwiperSlide>
+                <SwiperSlide>
+                    <Shelf />
+                </SwiperSlide>
                 <SwiperSlide>
                     <Shelf />
                 </SwiperSlide>
