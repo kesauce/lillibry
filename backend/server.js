@@ -1,6 +1,7 @@
 import express from "express";
-import connectDatabase from './database.js';
-import User from './model/User.js';
+import bcrypt from "bcrypt";
+import connectDatabase from "./database.js";
+import User from "./model/User.js";
 
 const app = express();
 const PORT = 8000;
@@ -12,14 +13,18 @@ app.post("/auth/login", async (req, res) => {
     const { username, password } = req.body;
 
     // Check if that username exists
-    try{
-        const user = await User.findOne({ 'username': username });
-        console.log(user);
-    }
-    catch{
+    try {
+        const user = await User.findOne({ username: username });
 
+        // Failed login - if username doesn't exist or password doesn't match existing user's
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ message: "Invalid username or password" });
+        } else {
+            
+        }
+    } catch (err){
+        console.log(err);
     }
-
 });
 
 // // Routing for user information
