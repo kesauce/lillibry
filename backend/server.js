@@ -5,6 +5,7 @@ import User from "./model/User.js";
 
 const app = express();
 const PORT = 8000;
+const SALT_ROUND = 10;
 app.use(express.json());
 connectDatabase();
 
@@ -18,11 +19,37 @@ app.post("/auth/login", async (req, res) => {
 
         // Failed login - if username doesn't exist or password doesn't match existing user's
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ message: "Invalid username or password" });
+            return res
+                .status(401)
+                .json({ message: "Invalid username or password" });
         } else {
-            
         }
-    } catch (err){
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+app.post("/auth/register", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // Ensure the username isn't taken
+        if (await User.findOne({ username: username })) {
+            return res.status(409).json({ message: "Username taken" });
+        } else {
+            const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
+
+            // Add the user the database and hash their password
+            await User.create({
+                username: username,
+                password: hashedPassword,
+            });
+
+            return res
+                .status(200)
+                .json({ messsage: "User successfully created" });
+        }
+    } catch (err) {
         console.log(err);
     }
 });
