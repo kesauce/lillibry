@@ -1,26 +1,35 @@
 import "../styles/Auth.css";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Login() {
     // Setting the states
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+    let navigate = useNavigate();
+
     // Handle the login and submit the form
     const login = async (e) => {
         // Prevent the page from refreshing onsubmit
         e.preventDefault();
 
-        // Make the fetch
+        // Make the fetch request
         const res = await fetch("http://localhost:8000/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "username": username,
-                "password": password
-            }
-            ),
+                username: username,
+                password: password,
+            }),
         });
+
+        // Extract the token from the response
+        const data = await res.json();
+        if (data.token != null) {
+            localStorage.setItem("token", data.token);
+            navigate("/");
+        }
     };
 
     return (
@@ -36,7 +45,9 @@ function Login() {
                             id="username"
                             placeholder="username"
                             required
-                            onChange={(event) => {setUsername(event.target.value)}}
+                            onChange={(event) => {
+                                setUsername(event.target.value);
+                            }}
                         />
                     </div>
 
@@ -47,7 +58,9 @@ function Login() {
                             id="password"
                             placeholder="••••••••"
                             required
-                            onChange={(event) => {setPassword(event.target.value)}}
+                            onChange={(event) => {
+                                setPassword(event.target.value);
+                            }}
                         />
                     </div>
 

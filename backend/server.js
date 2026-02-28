@@ -2,6 +2,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 import connectDatabase from "./database.js";
 import User from "./model/User.js";
+import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const app = express();
 const PORT = 8000;
@@ -23,6 +25,11 @@ app.post("/auth/login", async (req, res) => {
                 .status(401)
                 .json({ message: "Invalid username or password" });
         } else {
+            // Generate a JWT
+            const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
+                expiresIn: "30d",
+            });
+            return res.status(200).json({ token: token });
         }
     } catch (err) {
         console.log(err);
