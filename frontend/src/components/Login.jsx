@@ -39,6 +39,9 @@ function Login() {
 
             setErrorMessage("Invalid username or password. Please try again.")
         }
+        else{
+            alert("An error has occurred. Please try again.")
+        }
     };
 
     return (

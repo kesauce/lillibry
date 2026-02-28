@@ -39,6 +39,9 @@ function Register() {
             
             setUsernameMessage("Username taken. Please try another one.")
         }
+        else{
+            alert("An error has occurred. Please try again.")
+        }
     };
 
     return (
