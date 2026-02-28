@@ -126,7 +126,8 @@ input.input-error:focus{
 	box-shadow: 4px 4px 0px maroon;
 }
 
-#error-message {
+#error-message,
+#username-message {
 	color: red;
     font-size: 0.85rem;
     margin-top: 4px;

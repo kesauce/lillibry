@@ -1,11 +1,14 @@
 import "../styles/Auth.css";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function Register() {
     // Setting the states
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [usernameMessage, setUsernameMessage] = useState("");
+    
+    let navigate = useNavigate();
 
     // Handle the register and submit the form
     const register = async (e) => {
@@ -17,10 +20,25 @@ function Register() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                "username": username,
-                "password": password,
+                username: username,
+                password: password,
             }),
         });
+
+        //Extract the response
+        const data = await res.json();
+
+        // If successful registeration, navigate to page
+        if (res.status == 201 && data.token != null) {
+            navigate("/");
+        }
+        // If username taken
+        else if (res.status == 409){
+            let username = document.getElementById("username");
+            username.classList.add("input-error");
+            
+            setUsernameMessage("Username taken. Please try another one.")
+        }
     };
 
     return (
@@ -41,6 +59,8 @@ function Register() {
                             }}
                         />
                     </div>
+
+                    <p id="username-message">{usernameMessage}</p>
 
                     <div className="input-group">
                         <label htmlFor="password">PASSWORD</label>

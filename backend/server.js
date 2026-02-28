@@ -29,7 +29,7 @@ app.post("/auth/login", async (req, res) => {
             const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
                 expiresIn: "30d",
             });
-            return res.status(200).json({ token: token });
+            return res.status(200).json({ "message": "Login successful", token: token });
         }
     } catch (err) {
         console.log(err);
@@ -52,9 +52,14 @@ app.post("/auth/register", async (req, res) => {
                 password: hashedPassword,
             });
 
+            // Generate a JWT
+            const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
+                expiresIn: "30d",
+            });
+
             return res
-                .status(200)
-                .json({ messsage: "User successfully created" });
+                .status(201)
+                .json({ messsage: "User successfully created", "token": token });
         }
     } catch (err) {
         console.log(err);
