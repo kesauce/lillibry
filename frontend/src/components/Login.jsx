@@ -6,6 +6,7 @@ function Login() {
     // Setting the states
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     let navigate = useNavigate();
 
@@ -29,6 +30,14 @@ function Login() {
         if (data.token != null) {
             localStorage.setItem("token", data.token);
             navigate("/");
+        } else if (res.status == 401) {
+            let username = document.getElementById("username");
+            let password = document.getElementById("password");
+
+            username.classList.add("input-error");
+            password.classList.add("input-error");
+
+            setErrorMessage("Invalid username or password. Please try again.")
         }
     };
 
@@ -63,6 +72,8 @@ function Login() {
                             }}
                         />
                     </div>
+
+                    <p id="error-message">{errorMessage}</p>
 
                     <button type="submit">SIGN IN</button>
 
