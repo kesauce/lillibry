@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 import "dotenv/config";
-import User from "./model/User.js";
 
-mongoose.connect(process.env.MONGO_URI);
+// Attempt to connect to database
+const connectDatabase = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+    } catch (err) {
+        console.error(err.message);
+        process.exit(1);
+    }
+};
 
-// Creates a new user  and inserts it into database
-const user = await User.create({
-    username: "test",
-    password: "test"
-});
-
-console.log("Created user:", user);
+export default connectDatabase;
