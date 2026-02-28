@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema, model } = mongoose;
+const { Schema, model, SchemaTypes } = mongoose;
 
 const userSchema = new Schema({
     username: {
@@ -11,7 +11,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
         minLength: 8
-    }
+    },
+    shelves: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Shelf'
+    }]
 });
 
 // Create a new collection using the schema
