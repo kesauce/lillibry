@@ -11,7 +11,7 @@ const SALT_ROUND = 10;
 app.use(express.json());
 connectDatabase();
 
-// Routing for user authentication
+// Routing for user login
 app.post("/auth/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -26,16 +26,23 @@ app.post("/auth/login", async (req, res) => {
                 .json({ message: "Invalid username or password" });
         } else {
             // Generate a JWT
-            const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET, {
-                expiresIn: "30d",
-            });
-            return res.status(200).json({ "message": "Login successful", token: token });
+            const token = jwt.sign(
+                { userId: user._id },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: "30d",
+                },
+            );
+            return res
+                .status(200)
+                .json({ message: "Login successful", token: token });
         }
     } catch (err) {
         console.log(err);
     }
 });
 
+// Routing for user registeration
 app.post("/auth/register", async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -59,24 +66,37 @@ app.post("/auth/register", async (req, res) => {
 
             return res
                 .status(201)
-                .json({ messsage: "User successfully created", "token": token });
+                .json({ messsage: "User successfully created", token: token });
         }
     } catch (err) {
         console.log(err);
     }
 });
 
-// // Routing for user information
-// app.get("/users", (req, res) => {
-//     let filteredData = startups;
+// Routing for token verification
+app.get("/auth/verify", async (req, res) => {
+    try {
+        // Grab only the token from the response if the header exists
+        if (req.headers.authorization) {
+            const token = req.headers.authorization.split(" ")[1];
 
-//     const { id, username, password, shelves } = req.query;
-// });
+            if (!token) {
+                return res.status(401).json({ message: "Token not found." });
+            }
 
-// // Routing for book information
-// app.get("/books", (req, res) => {
-//     res.send("Welcome to the Express.js Tutorial");
-// });
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                return res
+                    .status(200)
+                    .json({ message: "Token valid.", userId: decoded.userId });
+            } catch (err) {
+                return res.status(401).json({ message: "Token invalid." });
+            }
+        }
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 // Start the server
 app.listen(PORT, () => {
