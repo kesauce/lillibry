@@ -1,8 +1,60 @@
-.nav{
+.nav {
     background-color: var(--yellow-green);
     height: 5vh;
-    width: 30vw;
+    width: 40vw;
     margin: auto;
     margin-top: 2rem;
     border-radius: 5px;
+    padding: 0.2rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.search-wrapper{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 75%;
+    background-color: var(--light-yellow-green);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#search-icon {
+    height: 90%;
+    margin: 5px;
+    margin-right: 2px;
+    color: var(--ebony);
+}
+
+.search-wrapper input{
+    height: 100%;
+    border: none;
+}
+
+.search-wrapper input:focus{
+    box-shadow: none;
+}
+
+.icons{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icons img{
+    height: 2.3rem;
+    border-radius: 5px;
+    padding: 0 1rem;
+}
+
+
+#delete-icon{
+    height: 2rem;
+}
+
+#profile-icon{
+    height: 1.7rem;
 }
