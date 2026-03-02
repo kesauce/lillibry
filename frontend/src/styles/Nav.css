@@ -11,7 +11,7 @@
     align-items: center;
 }
 
-.search-wrapper{
+.search-wrapper {
     height: 100%;
     display: flex;
     align-items: center;
@@ -28,23 +28,23 @@
     color: var(--ebony);
 }
 
-.search-wrapper input{
+.search-wrapper input {
     height: 100%;
     border: none;
 }
 
-.search-wrapper input:focus{
+.search-wrapper input:focus {
     box-shadow: none;
 }
 
-.icons{
+.icons {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.icons img{
+.icons img {
     height: 2.3rem;
     border-radius: 5px;
     padding: 0 1rem;
@@ -52,19 +52,26 @@
     transition: opacity 0.2s ease;
 }
 
-.icons img:hover{
+.icons img:hover {
     opacity: 0.6;
 }
 
-
-#delete-icon{
+#delete-icon {
     height: 2rem;
 }
 
-#edit-icon{
+#edit-icon {
     height: 1.8rem;
 }
 
-#profile-icon{
+#profile-icon {
     height: 1.7rem;
 }
+
+button {
+    all: unset;
+}
+button:hover {
+    all: unset;
+}
+
