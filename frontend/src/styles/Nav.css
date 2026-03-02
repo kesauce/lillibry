@@ -48,11 +48,21 @@
     height: 2.3rem;
     border-radius: 5px;
     padding: 0 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.icons img:hover{
+    opacity: 0.6;
 }
 
 
 #delete-icon{
     height: 2rem;
+}
+
+#edit-icon{
+    height: 1.8rem;
 }
 
 #profile-icon{
