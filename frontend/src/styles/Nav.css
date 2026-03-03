@@ -1,3 +1,12 @@
+.backdrop{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    z-index: 1;
+}
+
 .nav {
     background-color: var(--yellow-green);
     height: 5vh;
