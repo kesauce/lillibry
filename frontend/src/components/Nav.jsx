@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import "../styles/Nav.css";
 
 function Nav({ activeMenu, setActiveMenu }) {
@@ -9,9 +10,20 @@ function Nav({ activeMenu, setActiveMenu }) {
             </div>
             <div className="icons">
                 <button
-                    onClick={() => activeMenu == "add" ? setActiveMenu(null) : setActiveMenu("add")}
+                    onClick={() =>
+                        activeMenu == "add"
+                            ? setActiveMenu(null)
+                            : setActiveMenu("add")
+                    }
                 >
-                    <img id="add-icon" src="../src/assets/icons/add.svg" />
+                    <img
+                        id={activeMenu == "add" ? "cancel-icon" : "add-icon"}
+                        src={
+                            activeMenu == "add"
+                                ? "../src/assets/icons/cancel.svg"
+                                : "../src/assets/icons/add.svg"
+                        }
+                    />
                 </button>
                 <button>
                     <img id="edit-icon" src="../src/assets/icons/edit.svg" />
