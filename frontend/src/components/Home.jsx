@@ -10,19 +10,13 @@ function Homepage() {
     const [activeMenu, setActiveMenu] = useState(null);
     const addMenuRef = useRef(null);
 
-    // If you click out of the add menu, close it
-    useEffect(() => {
-        if (activeMenu != null) {
-        }
-    }, [activeMenu]);
-
     return (
         <div className="homepage">
             <Nav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
             <Shelves />
-            {activeMenu == null ? null : (
-                <div className="backdrop">
-                    <AnimatePresence>
+            <AnimatePresence> {/* Needs to watch its children for it to work */}
+                {activeMenu == null ? null : (
+                    <div className="backdrop">
                         {activeMenu == "add" ? (
                             <motion.div
                                 key="modal"
@@ -43,9 +37,9 @@ function Homepage() {
                                 <AddMenu ref={addMenuRef} />
                             </motion.div>
                         ) : null}
-                    </AnimatePresence>
-                </div>
-            )}
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
