@@ -32,17 +32,29 @@
 .add-menu a {
     display: inline-block;
     width: 13rem;
+    cursor: pointer;
 
     border: 1px solid var(--light-yellow);
-    box-shadow: inset 0 0 0 0 var(--light-yellow);
+    box-shadow: inset 0 0 0 0 var(--yellow-green);
     color: var(--light-yellow);
     padding: 0.3rem 1rem;
+    background-color: transparent;
     transition:
         color 0.3s ease-in-out,
-        box-shadow 0.3s ease-in-out;
+        box-shadow 0.3s ease-in-out,
+        background-color 0.3s ease-in-out,
+        border-color 0.3s ease-in-out;
     font-size: 1.2rem;
 }
 .add-menu a:hover {
-    box-shadow: inset 13rem 0 0 0 var(--light-yellow);
+    box-shadow: inset 13rem 0 0 0 var(--yellow-green);
+    border-color: var(--yellow-green);
     color: var(--ebony);
 }
+
+.link-wrapper-active a{
+    color: var(--ebony);
+    background-color: var(--light-yellow);
+    border-color: var(--light-yellow);
+}
+
