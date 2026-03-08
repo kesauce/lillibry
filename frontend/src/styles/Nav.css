@@ -1,18 +1,24 @@
 .backdrop{
     width: 100vw;
-    height: 70vh;
+    height: 75vh;
     position: absolute;
-    top: 10%;
+    top: 15%;
     left: 0%;
     z-index: 1;
+}
+
+.homepage{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .nav {
     background-color: var(--yellow-green);
     height: 5vh;
     width: 40vw;
-    margin: auto;
-    margin-top: 2rem;
+    margin: 1rem auto;
     border-radius: 5px;
     padding: 0.2rem;
 

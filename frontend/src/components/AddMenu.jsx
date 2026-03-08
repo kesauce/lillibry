@@ -8,7 +8,9 @@ function AddMenu() {
     switch (activePage){
         default:
             pageComponent = (
-                <p>ho</p>
+                <div className="find-book">
+                    <h1>Find A Book</h1>
+                </div>
             );
             break;
     };
