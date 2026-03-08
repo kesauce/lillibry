@@ -1,7 +1,7 @@
 import Shelves from "../components/Shelves.jsx";
 import Nav from "../components/Nav.jsx";
 import "../styles/Nav.css";
-import AddMenu from "./AddMenu.jsx";
+import AddMenu from "./AddMenu/AddMenu.jsx";
 import { useEffect, useRef, useState } from "react";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";

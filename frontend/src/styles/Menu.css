@@ -27,12 +27,13 @@
 
 .link-wrapper {
     margin: 0.5rem;
+    width: 90%;
 }
 
 .add-menu a {
     display: inline-block;
-    width: 13rem;
     cursor: pointer;
+    width: 100%;
 
     border: 1px solid var(--light-yellow);
     box-shadow: inset 0 0 0 0 var(--yellow-green);
@@ -40,14 +41,14 @@
     padding: 0.3rem 1rem;
     background-color: transparent;
     transition:
-        color 0.3s ease-in-out,
-        box-shadow 0.3s ease-in-out,
-        background-color 0.3s ease-in-out,
-        border-color 0.3s ease-in-out;
+        color 0.5s ease-in-out,
+        box-shadow 0.5s ease-in-out,
+        background-color 0.5s ease-in-out,
+        border-color 0.5s ease-in-out;
     font-size: 1.2rem;
 }
 .add-menu a:hover {
-    box-shadow: inset 13rem 0 0 0 var(--yellow-green);
+    box-shadow: inset 400px 0 0 0 var(--yellow-green);
     border-color: var(--yellow-green);
     color: var(--ebony);
 }
@@ -58,9 +59,19 @@
     border-color: var(--light-yellow);
 }
 
+.find-book{
+    padding: 1rem;
+    width: 100%;
+}
+
 .find-book h1{
     font-family: 'Radley';
     color: var(--ebony);
     font-size: 4rem;
-    padding: 1rem 2rem;
+    padding: 0;
+    
+}
+
+.find-book input{
+    width: 100%;
 }
