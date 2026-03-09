@@ -11,7 +11,7 @@ router.post("/find", async (req, res) => {
 
         // Ensure query isn't empty or less than 3 digits
         if (!query || query.length < 3) {
-            console.err("Search query is empty or less than 3 character");
+            console.err("Query error: Search query is empty or less than 3 character.");
             return res
                 .status(400)
                 .json({ message: "Query is empty or less than 3 characters." });
@@ -24,7 +24,7 @@ router.post("/find", async (req, res) => {
         // Check if the API responded
         if (!apiRes.ok) {
             console.err(
-                `There was a problem with querying OpenLibrary.org: ${apiRes.status}`,
+                `OpenLibrary.org error: ${apiRes.status}`,
             );
             return res
                 .status(502)

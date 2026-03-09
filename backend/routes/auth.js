@@ -10,10 +10,16 @@ const router = express.Router();
 
 // Routing for user login
 router.post("/login", async (req, res) => {
-    const { username, password } = req.body;
-
     // Check if that username exists
     try {
+        const { username, password } = req.body;
+
+        // Check if username or password are empty
+        if (!username || !password){
+            console.error("Field error: Username and/or password are empty.");
+            return res.status(400).json({"message": "Username and/or password are empty"});
+        }
+
         const user = await User.findOne({ username: username });
 
         // Failed login - if username doesn't exist or password doesn't match existing user's
@@ -35,7 +41,8 @@ router.post("/login", async (req, res) => {
                 .json({ message: "Login successful", token: token });
         }
     } catch (err) {
-        console.log(err);
+        console.error(`A server error has occurred: ${err}`);
+        return res.status(500).json({"message": "An unexpected server error has occurred."});
     }
 });
 
@@ -43,6 +50,12 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
     try {
         const { username, password } = req.body;
+
+        // Check if username or password are empty
+        if (!username || !password){
+            console.error("Field error: Username and/or password are empty.");
+            return res.status(400).json({"message": "Username and/or password are empty"});
+        }
 
         // Ensure the username isn't taken
         if (await User.findOne({ username: username })) {
@@ -66,7 +79,8 @@ router.post("/register", async (req, res) => {
                 .json({ messsage: "User successfully created", token: token });
         }
     } catch (err) {
-        console.log(err);
+        console.error(`A server error has occurred: ${err}`);
+        return res.status(500).json({"message": "An unexpected server error has occurred."});
     }
 });
 
@@ -77,7 +91,9 @@ router.get("/verify", async (req, res) => {
         if (req.headers.authorization) {
             const token = req.headers.authorization.split(" ")[1];
 
+            // Ensure token exists
             if (!token) {
+                console.error("Token error: Token doesn't exist.")
                 return res.status(401).json({ message: "Token not found." });
             }
 
@@ -87,11 +103,13 @@ router.get("/verify", async (req, res) => {
                     .status(200)
                     .json({ message: "Token valid.", userId: decoded.userId });
             } catch (err) {
+                console.error("Token error: Token is invalid.")
                 return res.status(401).json({ message: "Token invalid." });
             }
         }
     } catch (err) {
-        console.log(err);
+        console.error(`A server error has occurred: ${err}`);
+        return res.status(500).json({"message": "An unexpected server error has occurred."});
     }
 });
 
