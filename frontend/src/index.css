@@ -9,6 +9,12 @@
     --ebony: #454d30; 
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 @font-face {
     font-family: "moontime";
     src: url("./assets/fonts/moontime.ttf");
