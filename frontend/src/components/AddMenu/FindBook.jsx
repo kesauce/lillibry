@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Bouncy } from "ldrs/react";
 import "../../styles/Menu.css";
-import { useState } from "react";
 
 function FindBook() {
+    const [results, setResults] = useState(null);
+    const [status, setStatus] = useState("idle");
     const [query, setQuery] = useState("");
 
     const handleSearch = async () => {
@@ -15,19 +17,24 @@ function FindBook() {
             }),
         });
 
-        //Extract the response
+        //Extract the response and add it to result
         const data = await res.json();
+        setStatus("idle");
+        setResults(data.result);
     };
 
     // Runs handleSearch everytime query is changed
     useEffect(() => {
-        if (!query) return;
+        if (!query || query.length < 3) return;
 
         // Only runs handleSearch() after 500ms after the user stops typing
-        const timeout = setTimeout(() => { handleSearch() }, 500);
+        const timeout = setTimeout(() => {
+            handleSearch();
+            setStatus("loading");
+        }, 500);
 
         // Runs this code before every execution of the next useEffect - remove timeout if user types before 500ms has passed
-        return() => {
+        return () => {
             clearTimeout(timeout);
         };
     }, [query]);
@@ -46,7 +53,30 @@ function FindBook() {
                 />
             </form>
 
-            <div className="book-list">book 1</div>
+            <div className="book-list">
+                {status == "loading" ? (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            height: "100%",
+                        }}
+                    >
+                        <Bouncy color="#454d30" />
+                    </div>
+                ) : (
+                    <ul>
+                        {results
+                            ? Object.values(results).map((result, index) => (
+                                  <li key={result.key || index}>
+                                      {result.title} {result.author}
+                                  </li>
+                              ))
+                            : null}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 }
