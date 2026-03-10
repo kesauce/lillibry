@@ -70,7 +70,9 @@ function FindBook() {
                         {results
                             ? Object.values(results).map((result, index) => (
                                   <li key={result.key || index}>
-                                      {result.title} {result.author}
+                                        <img src={result.coverURL} />
+                                        <p>{result.title}</p>
+                                        <p>{result.author}</p>
                                   </li>
                               ))
                             : null}

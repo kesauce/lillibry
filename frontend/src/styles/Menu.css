@@ -102,5 +102,6 @@
 
 .book-list li{
     padding: 0.5rem 0;
+    border: 1px solid black;
     font-family: 'Radley';
 }

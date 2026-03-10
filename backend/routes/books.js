@@ -42,6 +42,7 @@ router.post("/find", async (req, res) => {
                 title: data.docs[i].title,
                 author: data.docs[i].author_name,
                 coverID: data.docs[i].cover_i,
+                coverURL: `https://covers.openlibrary.org/b/id/${data.docs[i].cover_i}-L.jpg`,
                 publishYear: data.docs[i].first_publish_year,
             };
 
