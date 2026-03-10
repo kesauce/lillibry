@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Bouncy } from "ldrs/react";
 import "../../styles/Menu.css";
+import bookPlaceholder from "../../assets/images/book_placeholder.png";
+import BookItem from "./BookItem";
 
 function FindBook() {
     const [results, setResults] = useState(null);
-    const [status, setStatus] = useState("idle");
+    const [resultStatus, setResultStatus] = useState("idle");
     const [query, setQuery] = useState("");
-
     const handleSearch = async () => {
         // Make the fetch
         const res = await fetch("http://localhost:8000/book/find", {
@@ -19,7 +20,7 @@ function FindBook() {
 
         //Extract the response and add it to result
         const data = await res.json();
-        setStatus("idle");
+        setResultStatus("idle");
         setResults(data.result);
     };
 
@@ -30,7 +31,7 @@ function FindBook() {
         // Only runs handleSearch() after 500ms after the user stops typing
         const timeout = setTimeout(() => {
             handleSearch();
-            setStatus("loading");
+            setResultStatus("loading");
         }, 500);
 
         // Runs this code before every execution of the next useEffect - remove timeout if user types before 500ms has passed
@@ -38,7 +39,6 @@ function FindBook() {
             clearTimeout(timeout);
         };
     }, [query]);
-
     return (
         <div className="find-book">
             <h1>Find A Book</h1>
@@ -54,7 +54,7 @@ function FindBook() {
             </form>
 
             <div className="book-list">
-                {status == "loading" ? (
+                {resultStatus == "loading" ? (
                     <div
                         style={{
                             display: "flex",
@@ -70,9 +70,7 @@ function FindBook() {
                         {results
                             ? Object.values(results).map((result, index) => (
                                   <li key={result.key || index}>
-                                        <img src={result.coverURL} />
-                                        <p>{result.title}</p>
-                                        <p>{result.author}</p>
+                                    <BookItem title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
                                   </li>
                               ))
                             : null}
