@@ -105,7 +105,29 @@
     border-top: 1px solid var(--ebony);
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+}
+
+.book-item .left{
+    display: flex;
+    direction: row;
+    align-items: center;
+}
+
+.book-item .right{
+    width: 30%;
+    display: flex;
+    direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.book-item .right input{
+    all: unset;
+}
+
+.css-b62m3t-container{
+    width: 100%;
 }
 
 .book-item img{
