@@ -1,12 +1,16 @@
 import "../../styles/Menu.css";
 import { useState } from "react";
 import FindBook from "./FindBook";
+import AddShelf from "./AddShelf";
 
 function AddMenu() {
     const [activePage, setActivePage] = useState("FindBook");
     let pageComponent;
 
     switch (activePage){
+        case "AddShelf":
+            pageComponent = <AddShelf/>
+            break;
         default:
             pageComponent = <FindBook/>
             break;

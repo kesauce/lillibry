@@ -1,3 +1,7 @@
+/*  ------------------------
+*   AddMenu.jsx Styling
+*   ------------------------
+*/
 .add-menu {
     background-color: var(--light-yellow-green);
     height: 75vh;
@@ -60,12 +64,18 @@
     border-color: var(--light-yellow);
 }
 
-.find-book {
+/*  ------------------------
+*   FindBook.jsx Styling
+*   ------------------------
+*/
+.find-book,
+.add-shelf {
     padding: 1rem;
-    width: 100%;
+    width: 80%;
 }
 
-.find-book h1 {
+.find-book h1,
+.add-shelf h1 {
     font-family: 'Radley';
     color: var(--ebony);
     font-size: 4rem;
@@ -77,6 +87,10 @@
     width: 100%;
 }
 
+/*  ------------------------
+*   BookItem.jsx Styling
+*   ------------------------
+*/
 .book-list {
     margin: 1rem 0;
     padding: 1rem;

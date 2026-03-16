@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "../../styles/Menu.css";
 import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
-import makeAnimated from 'react-select/animated';
+import makeAnimated from "react-select/animated";
 
 function BookItem({ title, author, coverID, coverURL }) {
     const [cover, setCover] = useState(bookPlaceholder);
@@ -32,6 +32,29 @@ function BookItem({ title, author, coverID, coverURL }) {
                     components={animatedComponents}
                     isMulti
                     placeholder={"Select shelves"}
+                    theme={(theme) => ({
+                        ...theme,
+                        colors: {
+                            ...theme.colors,
+                            primary: "#454d30",
+                            neutral0: "#f0ead2", // Background colour
+                            neutral80: "#454d30", // Selected value text & input text
+                            neutral60: "#454d30", // Placeholder text
+                            neutral20: "#454d30", // Border & indicators
+                        },
+                    })}
+                    styles={{
+                        control: (base, state) => ({
+                            ...base,
+                            boxShadow: "none", // Removes the glow ring
+                            borderColor: state.isFocused
+                                ? "#454d30"
+                                : base.borderColor,
+                            "&:hover": {
+                                borderColor: "#adc178",
+                            },
+                        }),
+                    }}
                 />
             </div>
         </div>
