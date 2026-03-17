@@ -65,7 +65,7 @@
 }
 
 /*  ------------------------
-*   FindBook.jsx Styling
+*   FindBook.jsx and AddShelf.jsx Styling
 *   ------------------------
 */
 .find-book,
@@ -83,8 +83,70 @@
 
 }
 
-.find-book input {
+.find-book input,
+.add-shelf input {
     width: 100%;
+    margin: 0.5rem 0;
+}
+
+.find-book input:focus,
+.add-shelf input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--olive);
+}
+
+.add-shelf form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.submit-shelf {
+    appearance: none;
+    background-color: var(--ebony);
+    border: 2px solid var(--ebony);
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: var(--light-yellow);
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Radley";
+    font-size: 20px;
+    margin: 0.5rem 0;
+    height: 3rem;
+    outline: none;
+    padding: 0.5rem;
+    width: 50%;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+}
+
+.submit-shelf:disabled {
+    pointer-events: none;
+}
+
+.submit-shelf:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.submit-shelf:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+#message{
+	color: var(--ebony);
+    font-size: 1rem;
+    margin-top: 4px;
+	text-align: center;
+    font-family: "Radley";
 }
 
 /*  ------------------------
@@ -113,7 +175,7 @@
     display: none;
 }
 
-.book-item{
+.book-item {
     padding: 0.5rem 0;
     font-family: 'Radley';
     border-top: 1px solid var(--ebony);
@@ -122,13 +184,13 @@
     justify-content: space-between;
 }
 
-.book-item .left{
+.book-item .left {
     display: flex;
     direction: row;
     align-items: center;
 }
 
-.book-item .right{
+.book-item .right {
     width: 30%;
     display: flex;
     direction: row;
@@ -136,25 +198,25 @@
     justify-content: flex-end;
 }
 
-.book-item .right input{
+.book-item .right input {
     all: unset;
 }
 
-.css-b62m3t-container{
+.css-b62m3t-container {
     width: 100%;
 }
 
-.book-item img{
+.book-item img {
     width: 7rem;
     margin: 0.5rem;
 }
 
-.book-item p{
+.book-item p {
     margin: 0.7rem;
     color: var(--ebony);
     font-size: x-large;
 }
 
-#author{
+#author {
     font-size: large;
 }
