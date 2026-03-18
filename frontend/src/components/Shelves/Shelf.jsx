@@ -1,5 +1,5 @@
-import "../styles/Shelves.css";
-import Book from "../components/Book.jsx";
+import "../../styles/Shelves.css";
+import Book from "./Book.jsx";
 
 function Shelf({name}) {
     return (

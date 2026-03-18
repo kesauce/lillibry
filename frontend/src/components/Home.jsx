@@ -1,4 +1,4 @@
-import Shelves from "../components/Shelves.jsx";
+import Shelves from "./Shelves/Shelves.jsx";
 import Nav from "../components/Nav.jsx";
 import "../styles/Nav.css";
 import AddMenu from "./AddMenu/AddMenu.jsx";
