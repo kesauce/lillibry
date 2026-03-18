@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import Shelf from "../model/Shelf.js";
 
 const router = express.Router();
+// Add a shelf to the database
 router.post("/add", async (req, res) => {
     try {
         const { shelfName } = req.body;
@@ -11,9 +12,7 @@ router.post("/add", async (req, res) => {
         // Check if username or password are empty
         if (!shelfName) {
             console.error("Field error: Shelf name is empty.");
-            return res
-                .status(400)
-                .json({ message: "Shelf name is empty" });
+            return res.status(400).json({ message: "Shelf name is empty" });
         }
 
         // Check the user's cookies and ensure that the server is making a shelf for correct user
@@ -63,4 +62,30 @@ router.post("/add", async (req, res) => {
     }
 });
 
+// Find a shelf in the database
+router.get("/find", async (req, res) => {
+    try {
+        const { name } = req.query;
+
+        // If finding a single shelf
+        if (name) {
+            // Search for movies of that specific genre
+            const shelf = await Shelf.findOne({ name: name });
+            if (shelf){
+                return res.status(200).json({ message: `Shelf with the name ${name} found.` });
+            }
+            else{
+                return res.status(404).json({message: `Shelf with the name ${name} not found.`})
+            }
+        }
+        // Return all the shelves
+        else {
+        }
+    } catch (err) {
+        console.error(`A server error has occurred: ${err}`);
+        return res
+            .status(500)
+            .json({ message: "An unexpected server error has occurred." });
+    }
+});
 export default router;
