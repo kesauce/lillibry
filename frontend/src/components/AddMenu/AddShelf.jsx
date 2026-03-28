@@ -57,8 +57,13 @@ function AddShelf() {
             const timeout = setTimeout(() => {
                 async function fetchShelf() {
                     // Make the fetch
+                    const token = localStorage.getItem("token");
                     const res = await fetch(
-                        `http://localhost:8000/shelf/find?name=${shelfName}`,
+                        `http://localhost:8000/shelf/find?name=${shelfName}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`
+                            }
+                        }
                     );
                     // Shelf already exists
                     if (res.status == 200) {

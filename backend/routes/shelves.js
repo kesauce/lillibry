@@ -67,10 +67,15 @@ router.get("/find", async (req, res) => {
     try {
         const { name } = req.query;
 
+        // Grab the token from the GET header
+        const token = req.headers.authorization?.split(" ")[1];
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decoded.userId;
+
         // If finding a single shelf
         if (name) {
-            // Search for movies of that specific genre
-            const shelf = await Shelf.findOne({ name: name });
+            // Search for shelves
+            const shelf = await Shelf.findOne({ name: name, owner: userId });
             if (shelf){
                 return res.status(200).json({ message: `Shelf with the name ${name} found.` });
             }
@@ -80,6 +85,13 @@ router.get("/find", async (req, res) => {
         }
         // Return all the shelves
         else {
+            const shelves = await Shelf.find({owner: userId});
+            if (shelves){
+                return res.status(200).json({message: `Shelves returned.`, data: shelves})
+            }
+            else{
+                return res.status(404).json({message: `Shelves not found.`});
+            }
         }
     } catch (err) {
         console.error(`A server error has occurred: ${err}`);
