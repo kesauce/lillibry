@@ -4,10 +4,12 @@ import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-function BookItem({ title, author, coverID, coverURL }) {
+function BookItem({ shelves, title, author, coverID, coverURL }) {
     const [cover, setCover] = useState(bookPlaceholder);
-
     const animatedComponents = makeAnimated();
+
+    // Reformat the shelves
+    const shelfNames = shelves.map((shelf => ({ value: shelf.name, label: shelf.name })));
 
     // Runs once - sets the default to the placeholder and rerenders once it gets the actual image if there is onez
     useEffect(() => {
@@ -31,12 +33,15 @@ function BookItem({ title, author, coverID, coverURL }) {
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti
+                    options={shelfNames}
                     placeholder={"Select shelves"}
                     theme={(theme) => ({
                         ...theme,
                         colors: {
                             ...theme.colors,
                             primary: "#454d30",
+                            primary25: "#adc178", // Hover
+                            neutral10: "#adc178", // Selected option
                             neutral0: "#f0ead2", // Background colour
                             neutral80: "#454d30", // Selected value text & input text
                             neutral60: "#454d30", // Placeholder text

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Bouncy } from "ldrs/react";
 import "../../styles/Menu.css";
-import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import BookItem from "./BookItem";
 
-function FindBook() {
+function FindBook({shelves}) {
     const [results, setResults] = useState(null);
     const [resultStatus, setResultStatus] = useState("idle");
     const [query, setQuery] = useState("");
@@ -70,7 +69,7 @@ function FindBook() {
                         {results
                             ? Object.values(results).map((result, index) => (
                                   <li key={result.key || index}>
-                                    <BookItem title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
+                                    <BookItem shelves={shelves} title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
                                   </li>
                               ))
                             : null}

@@ -24,7 +24,6 @@ function Homepage() {
             if (res.status == 200){
                 //Extract the response
                 const body = await res.json();
-                console.log(body);
                 setShelves(body.data);
             }
         };
@@ -58,7 +57,7 @@ function Homepage() {
                                     zIndex: 2,
                                 }}
                             >
-                                <AddMenu ref={addMenuRef} onShelfAdded={fetchShelves}/>
+                                <AddMenu ref={addMenuRef} shelves={shelves} onShelfAdded={fetchShelves}/>
                             </motion.div>
                         ) : null}
                     </div>

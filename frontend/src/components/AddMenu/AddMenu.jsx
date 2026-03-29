@@ -3,7 +3,7 @@ import { useState } from "react";
 import FindBook from "./FindBook";
 import AddShelf from "./AddShelf";
 
-function AddMenu({onShelfAdded}) {
+function AddMenu({shelves, onShelfAdded}) {
     const [activePage, setActivePage] = useState("FindBook");
     let pageComponent;
 
@@ -12,7 +12,7 @@ function AddMenu({onShelfAdded}) {
             pageComponent = <AddShelf onShelfAdded={onShelfAdded}/>
             break;
         default:
-            pageComponent = <FindBook/>
+            pageComponent = <FindBook shelves={shelves}/>
             break;
     };
 
