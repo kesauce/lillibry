@@ -3,13 +3,13 @@ import { useState } from "react";
 import FindBook from "./FindBook";
 import AddShelf from "./AddShelf";
 
-function AddMenu() {
+function AddMenu({onShelfAdded}) {
     const [activePage, setActivePage] = useState("FindBook");
     let pageComponent;
 
     switch (activePage){
         case "AddShelf":
-            pageComponent = <AddShelf/>
+            pageComponent = <AddShelf onShelfAdded={onShelfAdded}/>
             break;
         default:
             pageComponent = <FindBook/>

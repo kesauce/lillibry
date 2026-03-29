@@ -35,7 +35,7 @@ router.post("/add", async (req, res) => {
             const userId = decoded.userId;
 
             // Ensure the shelf name isn't taken
-            if (await Shelf.findOne({ owner: userId })) {
+            if (await Shelf.findOne({ owner: userId, name: shelfName })) {
                 return res
                     .status(409)
                     .json({ message: "Shelf already exists." });

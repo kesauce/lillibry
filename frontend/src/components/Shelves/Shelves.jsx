@@ -5,32 +5,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { useEffect, useState } from "react";
 
-function Shelves() {
-    const [shelves, setShelves] = useState([]);
-
-    const fetchShelves = async () => {
-        // Make the fetch
-        const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:8000/shelf/find", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        if (res.status == 200){
-            //Extract the response
-            const body = await res.json();
-            console.log(body);
-            setShelves(body.data);
-        }
-    };
-
-    // Fetch the shelves once
-    useEffect(() => {
-        fetchShelves();
-    }, []);
+function Shelves({shelves}) {
 
     return (
         <div className="shelves">

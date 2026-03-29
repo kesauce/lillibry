@@ -10,10 +10,34 @@ function Homepage() {
     const [activeMenu, setActiveMenu] = useState(null);
     const addMenuRef = useRef(null);
 
+    const [shelves, setShelves] = useState([]);
+    
+        const fetchShelves = async () => {
+            // Make the fetch
+            const token = localStorage.getItem("token");
+            const res = await fetch("http://localhost:8000/shelf/find", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+    
+            if (res.status == 200){
+                //Extract the response
+                const body = await res.json();
+                console.log(body);
+                setShelves(body.data);
+            }
+        };
+    
+        // Fetch the shelves once
+        useEffect(() => {
+            fetchShelves();
+        }, []);
+
     return (
         <div className="homepage">
             <Nav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-            <Shelves />
+            <Shelves shelves={shelves}/>
             <AnimatePresence> {/* Needs to watch its children for it to work */}
                 {activeMenu == null ? null : (
                     <div className="backdrop">
@@ -34,7 +58,7 @@ function Homepage() {
                                     zIndex: 2,
                                 }}
                             >
-                                <AddMenu ref={addMenuRef} />
+                                <AddMenu ref={addMenuRef} onShelfAdded={fetchShelves}/>
                             </motion.div>
                         ) : null}
                     </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../../styles/Menu.css";
 
-function AddShelf() {
+function AddShelf({onShelfAdded}) {
     // Setting up states
     const [shelfName, setShelfName] = useState("");
     const [shelfTaken, setShelfTaken] = useState(false);
@@ -38,12 +38,12 @@ function AddShelf() {
 
         // Extract the token from the response
         const data = await res.json();
-        if (res.status == 200) {
-            let message = document.getElementById("message");
+        if (res.status == 201) {
             let shelfName = document.getElementById("shelf-name");
 
             setMessage("Shelf successfully created.");
             shelfName.value = "";
+            onShelfAdded();
         } else {
             alert("An error has occurred. Please try again.");
         }
