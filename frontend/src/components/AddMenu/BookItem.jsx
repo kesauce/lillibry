@@ -4,18 +4,52 @@ import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-function BookItem({ shelves, title, author, coverID, coverURL }) {
+function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     const [cover, setCover] = useState(bookPlaceholder);
     const animatedComponents = makeAnimated();
 
     // Reformat the shelves
-    const shelfNames = shelves.map((shelf => ({ value: shelf.name, label: shelf.name })));
+    const shelfNames = shelves.map((shelf) => ({
+        value: shelf.name,
+        label: shelf.name,
+        bookKey: bookKey,
+        title: title,
+    }));
 
     // Runs once - sets the default to the placeholder and rerenders once it gets the actual image if there is onez
     useEffect(() => {
         if (!coverID) return;
         setCover(coverURL);
     }, []);
+
+    // Handle the shelf change
+    const addToShelf = async (selectedOptions) => {
+        // Grab token
+        const token = localStorage.getItem("item");
+        
+        // Add the book to every selected shelf using a fetch
+        let selectedShelves = selectedOptions.map(
+            (selectedItem) => selectedItem.value,
+        );
+
+        const res = await fetch("http://localhost:8000/book/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                shelves: selectedShelves,
+                bookKey: selectedOptions.bookKey,
+                title: selectedOptions.title,
+            }),
+        });
+
+        // //Extract the response and add it to result
+        // const data = await res.json();
+        // setResultStatus("idle");
+        // setResults(data.result);
+    };
 
     return (
         <div className="book-item">
@@ -30,6 +64,7 @@ function BookItem({ shelves, title, author, coverID, coverURL }) {
             </div>
             <div className="right">
                 <Select
+                    onChange={addToShelf}
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti

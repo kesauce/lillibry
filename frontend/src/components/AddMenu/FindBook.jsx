@@ -69,7 +69,7 @@ function FindBook({shelves}) {
                         {results
                             ? Object.values(results).map((result, index) => (
                                   <li key={result.key || index}>
-                                    <BookItem shelves={shelves} title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
+                                    <BookItem shelves={shelves} bookKey={result.key} title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
                                   </li>
                               ))
                             : null}

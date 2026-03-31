@@ -10,12 +10,12 @@ const shelfSchema = new Schema({
         type: String,
         required: true
     },
-    // books: [
-    //     {
-    //         type: SchemaTypes.ObjectId,
-    //         ref: "Book",
-    //     },
-    // ],
+    books: [
+        {
+            key: String,
+            title: String
+        }
+    ],
 });
 
 // Create a new collection using the schema
