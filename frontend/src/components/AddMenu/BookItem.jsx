@@ -6,6 +6,7 @@ import makeAnimated from "react-select/animated";
 
 function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     const [cover, setCover] = useState(bookPlaceholder);
+    const [selectedShelves, setSelectedShelves] = useState([]);
     const animatedComponents = makeAnimated();
 
     // Reformat the shelves
@@ -16,10 +17,34 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
         title: title,
     }));
 
-    // Runs once - sets the default to the placeholder and rerenders once it gets the actual image if there is onez
+    // Grab the names of the shelves this book is in
+    const checkBook = async () => {
+        // Grab token
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(`http://localhost:8000/book/check?bookKey=${bookKey}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        //Extract the response and set the selected shelves
+        const data = await res.json();
+        if (res.status == 200){
+            const formattedResult = data.shelves.map((shelfName) => ({value: shelfName, label: shelfName}))
+            setSelectedShelves(formattedResult);
+        }
+    };
+
+    // Runs once
     useEffect(() => {
+        // Sets the default to the placeholder and rerenders once it gets the actual image if there is one
         if (!coverID) return;
         setCover(coverURL);
+
+        // Check what shelves this book is in
+        checkBook();
     }, []);
 
     // Handle the shelf change
@@ -45,10 +70,10 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
             }),
         });
 
-        // //Extract the response and add it to result
-        // const data = await res.json();
-        // setResultStatus("idle");
-        // setResults(data.result);
+        //Extract the response and add it to result
+        if (res.status == 200){
+            setSelectedShelves(selectedOptions);
+        }
     };
 
     return (
@@ -69,6 +94,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
                     components={animatedComponents}
                     isMulti
                     options={shelfNames}
+                    value={selectedShelves}
                     placeholder={"Select shelves"}
                     theme={(theme) => ({
                         ...theme,
