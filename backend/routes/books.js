@@ -1,5 +1,7 @@
 import express from "express";
 import "dotenv/config";
+import jwt from "jsonwebtoken";
+import Shelf from "../model/Shelf.js";
 
 const router = express.Router();
 
@@ -11,7 +13,9 @@ router.post("/find", async (req, res) => {
 
         // Ensure query isn't empty or less than 3 digits
         if (!query || query.length < 3) {
-            console.err("Query error: Search query is empty or less than 3 character.");
+            console.error(
+                "Query error: Search query is empty or less than 3 character.",
+            );
             return res
                 .status(400)
                 .json({ message: "Query is empty or less than 3 characters." });
@@ -23,9 +27,7 @@ router.post("/find", async (req, res) => {
 
         // Check if the API responded
         if (!apiRes.ok) {
-            console.err(
-                `OpenLibrary.org error: ${apiRes.status}`,
-            );
+            console.error(`OpenLibrary.org error: ${apiRes.status}`);
             return res
                 .status(502)
                 .json({ message: "Failed to reach OpenLibrary.org." });
@@ -52,7 +54,63 @@ router.post("/find", async (req, res) => {
         return res.status(200).json({ result: formattedResult });
     } catch (err) {
         console.error(`A server error has occurred: ${err}`);
-        return res.status(500).json({"message": "An unexpected server error has occurred."});
+        return res
+            .status(500)
+            .json({ message: "An unexpected server error has occurred." });
+    }
+});
+
+// Route for adding a book to a given shelf
+router.post("/add", async (req, res) => {
+    try {
+        // Grab the given data
+        const { shelves, bookKey, title } = req.body;
+
+        // Check the user's cookies and ensure that the server is making a shelf for correct user
+        if (!req.headers.authorization) {
+            console.error("Token error: Header doesn't exist.");
+            return res.status(401).json({ message: "Header doesn't exist." });
+        }
+
+        const token = req.headers.authorization.split(" ")[1];
+
+        // Ensure token exists
+        if (!token) {
+            console.error("Token error: Token doesn't exist.");
+            return res.status(401).json({ message: "Token not found." });
+        }
+
+        try {
+            // Add the book's key to the given shelves with that user's account
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const userId = decoded.userId;
+
+            // Take an array of promises (using map) to run and wait
+            const userShelves = await Shelf.find({owner: userId});
+
+            // Map through the userShelves and make an array of promises - then run it (foreach doesn't wait for promises)
+            const promiseArray = userShelves.map(async (userShelf) => {
+                // If this user shelf is included in the selected shelves then add the book 
+                if(shelves.includes(userShelf.name)){
+                    await Shelf.updateOne({ owner: userId, name: userShelf.name }, { $push: { books: { key: bookKey, title: title } } });
+                }
+                // Remove that book from the shelf if it exists - because it's not included in the selected shelves
+                else if (userShelf.books.some(b => b.key === bookKey)){
+                    await Shelf.updateOne({ owner: userId, name: userShelf.name }, { $pull: { books: { key: bookKey } } });
+                }
+            });
+            await Promise.all(promiseArray);
+            
+            
+        } catch (err) {
+            console.error(`Server error: ${err}`);
+            return res.status(401).json({ message: "Token invalid." });
+        }
+    } catch (err) {
+        console.error(`A server error has occurred: ${err}`);
+        return res
+            .status(500)
+            .json({ message: "An unexpected server error has occurred." });
     }
 });
 

@@ -6,12 +6,10 @@ const bookSchema = new Schema({
         type: String,
         required: true,
     },
-    author: {
+    key: {
         type: String,
         required: true,
-    },
-    genre: [String],
-    publishDate: String,
+    }
     
 });
 

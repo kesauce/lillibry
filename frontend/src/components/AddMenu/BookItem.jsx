@@ -25,7 +25,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     // Handle the shelf change
     const addToShelf = async (selectedOptions) => {
         // Grab token
-        const token = localStorage.getItem("item");
+        const token = localStorage.getItem("token");
         
         // Add the book to every selected shelf using a fetch
         let selectedShelves = selectedOptions.map(
@@ -40,8 +40,8 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
             },
             body: JSON.stringify({
                 shelves: selectedShelves,
-                bookKey: selectedOptions.bookKey,
-                title: selectedOptions.title,
+                bookKey: bookKey,
+                title: title,
             }),
         });
 
