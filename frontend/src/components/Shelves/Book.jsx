@@ -1,9 +1,9 @@
 import "../../styles/Book.css";
 
-function Book({title}) {
+function Book({title, bookKey}) {
     return (
         <div className="book">
-            {/* <h1>{title}</h1> */}
+            {/* <h1>{bookKey}</h1> */}
         </div>
     );
 }

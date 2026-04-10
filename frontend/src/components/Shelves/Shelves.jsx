@@ -7,7 +7,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 function Shelves({shelves}) {
-
     return (
         <div className="shelves">
             <Swiper
@@ -29,7 +28,7 @@ function Shelves({shelves}) {
                     {
                         shelves.map((shelf, i) => (
                             <SwiperSlide key={i}>
-                                <Shelf name={shelf.name}/>
+                                <Shelf name={shelf.name} books={shelf.books}/>
                             </SwiperSlide>
                         ))
                     }
