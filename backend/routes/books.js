@@ -84,37 +84,42 @@ router.get("/check", async (req, res) => {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const userId = decoded.userId;
 
-            try{
+            try {
                 // Find all the user shelves
-                const userShelves = await Shelf.find({owner: userId});
+                const userShelves = await Shelf.find({ owner: userId });
 
                 let bookShelves = [];
 
                 // Map through the userShelves and add the shelf to the array if it contains the given book
                 const promiseArray = userShelves.map(async (userShelf) => {
-                    if (userShelf.books.some(b => b.key === bookKey)){
+                    if (userShelf.books.some((b) => b.key === bookKey)) {
                         bookShelves.push(userShelf.name);
                     }
                 });
                 await Promise.all(promiseArray);
 
-                if (bookShelves){
-                    return res.status(200).json({ message: "Book found in shelves.", shelves: bookShelves });
+                if (bookShelves) {
+                    return res
+                        .status(200)
+                        .json({
+                            message: "Book found in shelves.",
+                            shelves: bookShelves,
+                        });
+                } else {
+                    return res
+                        .status(404)
+                        .json({ message: "Book not found in any shelf." });
                 }
-                else{
-                   return res.status(404).json({ message: "Book not found in any shelf." }); 
-                }
-            }
-            catch(err){
+            } catch (err) {
                 console.error(`Database error: ${err}`);
-                return res.status(500).json({ message: "There was an error with the database." });
+                return res
+                    .status(500)
+                    .json({ message: "There was an error with the database." });
             }
-            
         } catch (err) {
             console.error(`Token error: ${err}`);
             return res.status(401).json({ message: "Token invalid." });
         }
-
     } catch (err) {
         console.error(`A server error has occurred: ${err}`);
         return res
@@ -127,7 +132,7 @@ router.get("/check", async (req, res) => {
 router.post("/add", async (req, res) => {
     try {
         // Grab the given data
-        const { shelves, bookKey, title } = req.body;
+        const { shelves, bookKey, title, cover } = req.body;
 
         // Check the user's cookies and ensure that the server is making a shelf for correct user
         if (!req.headers.authorization) {
@@ -148,30 +153,46 @@ router.post("/add", async (req, res) => {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const userId = decoded.userId;
 
-            try{
+            try {
                 // Take an array of promises (using map) to run and wait
-                const userShelves = await Shelf.find({owner: userId});
+                const userShelves = await Shelf.find({ owner: userId });
 
                 // Map through the userShelves and make an array of promises - then run it (foreach doesn't wait for promises)
                 const promiseArray = userShelves.map(async (userShelf) => {
-                    // If this user shelf is included in the selected shelves then add the book 
-                    if(shelves.includes(userShelf.name)){
-                        await Shelf.updateOne({ owner: userId, name: userShelf.name }, { $push: { books: { key: bookKey, title: title } } });
+                    // If this user shelf is included in the selected shelves then add the book
+                    if (shelves.includes(userShelf.name)) {
+                        await Shelf.updateOne(
+                            { owner: userId, name: userShelf.name },
+                            {
+                                $push: {
+                                    books: {
+                                        key: bookKey,
+                                        title: title,
+                                        cover: cover,
+                                    },
+                                },
+                            },
+                        );
                     }
                     // Remove that book from the shelf if it exists - because it's not included in the selected shelves
-                    else if (userShelf.books.some(b => b.key === bookKey)){
-                        await Shelf.updateOne({ owner: userId, name: userShelf.name }, { $pull: { books: { key: bookKey } } });
+                    else if (userShelf.books.some((b) => b.key === bookKey)) {
+                        await Shelf.updateOne(
+                            { owner: userId, name: userShelf.name },
+                            { $pull: { books: { key: bookKey } } },
+                        );
                     }
                 });
                 await Promise.all(promiseArray);
 
-                return res.status(200).json({ message: "Shelves updated successfully." });
-            }
-            catch(err){
+                return res
+                    .status(200)
+                    .json({ message: "Shelves updated successfully." });
+            } catch (err) {
                 console.error(`Database error: ${err}`);
-                return res.status(500).json({ message: "There was an error with the database." });
+                return res
+                    .status(500)
+                    .json({ message: "There was an error with the database." });
             }
-            
         } catch (err) {
             console.error(`Token error: ${err}`);
             return res.status(401).json({ message: "Token invalid." });

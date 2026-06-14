@@ -56,6 +56,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
 
     // Handle the shelf change
     const addToShelf = async (selectedOptions) => {
+        console.log("coverURL:", coverURL); // add this
         // Grab token
         const token = localStorage.getItem("token");
 
@@ -74,6 +75,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
                 shelves: selectedShelves,
                 bookKey: bookKey,
                 title: title,
+                cover: coverURL
             }),
         });
 

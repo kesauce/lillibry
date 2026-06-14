@@ -13,7 +13,8 @@ const shelfSchema = new Schema({
     books: [
         {
             key: String,
-            title: String
+            title: String,
+            cover: String
         }
     ],
 });
