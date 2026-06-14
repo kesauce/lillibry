@@ -6,6 +6,7 @@ import makeAnimated from "react-select/animated";
 
 function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     const [cover, setCover] = useState(bookPlaceholder);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const [selectedShelves, setSelectedShelves] = useState([]);
     const animatedComponents = makeAnimated();
 
@@ -22,17 +23,23 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
         // Grab token
         const token = localStorage.getItem("token");
 
-        const res = await fetch(`http://localhost:8000/book/check?bookKey=${bookKey}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            }
-        });
+        const res = await fetch(
+            `http://localhost:8000/book/check?bookKey=${bookKey}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
 
         //Extract the response and set the selected shelves
         const data = await res.json();
-        if (res.status == 200){
-            const formattedResult = data.shelves.map((shelfName) => ({value: shelfName, label: shelfName}))
+        if (res.status == 200) {
+            const formattedResult = data.shelves.map((shelfName) => ({
+                value: shelfName,
+                label: shelfName,
+            }));
             setSelectedShelves(formattedResult);
         }
     };
@@ -51,7 +58,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     const addToShelf = async (selectedOptions) => {
         // Grab token
         const token = localStorage.getItem("token");
-        
+
         // Add the book to every selected shelf using a fetch
         let selectedShelves = selectedOptions.map(
             (selectedItem) => selectedItem.value,
@@ -71,7 +78,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
         });
 
         //Extract the response and add it to result
-        if (res.status == 200){
+        if (res.status == 200) {
             setSelectedShelves(selectedOptions);
         }
     };
@@ -80,8 +87,9 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
         <div className="book-item">
             <div className="left">
                 <img
-                    src={cover}
-                    onError={(event) => (event.target.src = bookPlaceholder)}
+                    src={coverID && imageLoaded ? coverURL : bookPlaceholder}
+                    onLoad={() => coverID && setImageLoaded(true)}
+                    onError={() => setImageLoaded(false)}
                 />
                 <p>
                     {title} <br /> <span id="author">{author}</span>
