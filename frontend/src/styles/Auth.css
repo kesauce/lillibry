@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
 }
-h1 {
+.login h1 {
     color: var(--gray-brown);
     font-family: "moontime";
     font-size: 7rem;
@@ -38,7 +38,7 @@ h1 {
     border-radius: 12px;
 }
 
-h2 {
+.login h2 {
     color: var(--ebony);
     margin-bottom: 30px;
     font-size: 28px;
@@ -51,14 +51,14 @@ h2 {
     position: relative;
 }
 
-label {
+.login label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
     color: var(--ebony);
 }
 
-input {
+.login input {
     width: 100%;
     padding: 12px 15px;
     border: 2px solid var(--ebony);
@@ -68,11 +68,11 @@ input {
     transition: all 0.3s;
 }
 
-input:focus {
+.login input:focus {
     box-shadow: 4px 4px 0px var(--ebony);
 }
 
-button {
+.login button {
     width: 100%;
     padding: 12px; 	
     background-color: var(--yellow-green);
@@ -85,7 +85,7 @@ button {
     transition: all 0.3s;
 }
 
-button:hover {
+.login button:hover {
     box-shadow: 4px 4px 0px var(--ebony);
     transform: translate(-2px, -2px);
 }

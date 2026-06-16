@@ -1,5 +1,3 @@
-import "../../styles/Book.css";
-
 function Book({title, bookKey, cover}) {
     return (
         <div>
