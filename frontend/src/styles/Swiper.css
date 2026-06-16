@@ -1,0 +1,23 @@
+/* Styling for Swiper. Needs to increase specifity to overwrite default configs.*/
+.shelves .swiper-pagination-bullet-active {
+    background: var(--yellow-green);
+}
+
+.shelves .swiper-button-next,
+.shelves .swiper-button-prev {
+    color: var(--yellow-green);
+}
+
+.shelves .swiper-pagination {
+    bottom: 0rem !important;
+    size: 4px;
+}
+
+.shelves .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+}
+
+.shelves .swiper {
+    padding-bottom: 2rem !important;
+}

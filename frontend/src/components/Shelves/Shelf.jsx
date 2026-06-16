@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "../../styles/Shelves.css";
 import Book from "./Book.jsx";
 
 function Shelf({name, books}) {
@@ -17,15 +16,15 @@ function Shelf({name, books}) {
 
 
     return (
-        <div className="shelf">
+        <div className="bg-gray-orange pt-8 pb-8 px-8 w-4/5 h-full mx-auto mt-2 mb-4">
             {groupedBooks.map((row, i) => (
-                <div key={i} className="shelf-row">
+                <div key={i} className="bg-gray-brown h-40 mb-4 flex items-end">
                 {row.map( book => (
-                    <Book key={book.key} title={book.title} bookKey={book.key}/>
+                    <Book key={book.key} title={book.title} bookKey={book.key} cover={book.cover}/>
                 ))}
                 </div>
             ))}
-            <h1 className="shelf-name">{name}</h1>
+            <p className="font-radley p-0 text-3xl text-light-yellow text-center">{name}</p>
         </div>
     );
 }

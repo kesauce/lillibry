@@ -1,4 +1,4 @@
-import "../../styles/Shelves.css";
+import "../../styles/Swiper.css";
 import Shelf from "./Shelf.jsx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 
 function Shelves({shelves}) {
     return (
-        <div className="shelves">
+        <div className="shelves h-4/5 flex justify-center items-center">
             <Swiper
                 modules={[Navigation, Pagination]}
                 cssMode={true}

@@ -1,9 +1,9 @@
 import "../../styles/Book.css";
 
-function Book({title, bookKey}) {
+function Book({title, bookKey, cover}) {
     return (
-        <div className="book">
-            <h1>{bookKey}</h1>
+        <div>
+            <img className="w-1/5" src={cover}/>
         </div>
     );
 }

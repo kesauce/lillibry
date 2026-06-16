@@ -1,18 +1,30 @@
+@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Radley:ital@0;1&display=swap');
+
+@theme {
+    --color-light-yellow: #f0ead2;
+    --color-gray-brown: #6c584c;
+    --color-light-yellow-green: #dde5b6;
+    --color-gray-orange: #a98467;
+    --color-yellow-green: #adc178;
+    --color-ebony: #454d30;
+    --color-olive: #6f7c4d;
+
+    --font-moontime: "moontime";
+    --font-radley: "Radley";
+}
 
 :root {
     --light-yellow: #f0ead2;
     --gray-brown: #6c584c;
-	--light-yellow-green: #dde5b6;
+    --light-yellow-green: #dde5b6;
     --gray-orange: #a98467;
     --yellow-green: #adc178;
-    --ebony: #454d30; 
+    --ebony: #454d30;
     --olive: #6f7c4d;
 }
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
