@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import "../../styles/Menu.css";
 import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
@@ -136,4 +136,4 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     );
 }
 
-export default BookItem;
+export default memo(BookItem);

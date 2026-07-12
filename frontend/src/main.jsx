@@ -7,22 +7,27 @@ import Register from "./components/Register.jsx";
 import Homepage from "./components/Home.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <BrowserRouter>
-            <Routes>
-                <Route
-                    index
-                    element={
-                        <ProtectedRoute>
-                            <Homepage />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-            </Routes>
-        </BrowserRouter>
-    </StrictMode>,
+	<StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<BrowserRouter>
+				<Routes>
+					<Route
+						index
+						element={
+							<ProtectedRoute>
+								<Homepage />
+							</ProtectedRoute>
+						}
+					/>
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+				</Routes>
+			</BrowserRouter>
+		</QueryClientProvider>
+	</StrictMode>,
 );
