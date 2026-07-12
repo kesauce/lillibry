@@ -18,7 +18,7 @@ function Shelf({name, books}) {
     return (
         <div className="bg-gray-orange pt-8 pb-8 px-8 w-4/5 h-full mx-auto mt-2 mb-4">
             {groupedBooks.map((row, i) => (
-                <div key={i} className="bg-gray-brown h-40 mb-4 flex items-end">
+                <div key={i} className="bg-gray-brown h-40 mb-4 flex items-end overflow-hidden">
                 {row.map( book => (
                     <Book key={book.key} title={book.title} bookKey={book.key} cover={book.cover}/>
                 ))}
