@@ -1,83 +1,91 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Bouncy } from "ldrs/react";
 import "../../styles/Menu.css";
 import BookItem from "./BookItem";
 
-function FindBook({shelves}) {
-    const [results, setResults] = useState(null);
-    const [resultStatus, setResultStatus] = useState("idle");
-    const [query, setQuery] = useState("");
-    const handleSearch = async () => {
-        // Make the fetch
-        const res = await fetch("http://localhost:8000/book/find", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                query: query,
-            }),
-        });
+function FindBook({ shelves }) {
+	const [input, setInput] = useState("");
+	const [query, setQuery] = useState("");
 
-        //Extract the response and add it to result
-        const data = await res.json();
-        setResultStatus("idle");
-        setResults(data.result);
-    };
+	// Only update query 500ms after the user stops typing
+	useEffect(() => {
+		if (!input || input.length < 3) return;
 
-    // Runs handleSearch everytime query is changed
-    useEffect(() => {
-        if (!query || query.length < 3) return;
+		const timeout = setTimeout(() => {
+			setQuery(input);
+		}, 500);
 
-        // Only runs handleSearch() after 500ms after the user stops typing
-        const timeout = setTimeout(() => {
-            handleSearch();
-            setResultStatus("loading");
-        }, 500);
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [input]);
 
-        // Runs this code before every execution of the next useEffect - remove timeout if user types before 500ms has passed
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [query]);
-    return (
-        <div className="find-book">
-            <h1>Find A Book</h1>
-            <form>
-                <input
-                    type="text"
-                    id="title"
-                    placeholder="Enter book title or author"
-                    onChange={(event) => {
-                        setQuery(event.target.value);
-                    }}
-                />
-            </form>
+	const { data: results, isLoading } = useQuery({
+		queryKey: ["findBook", query],
+		queryFn: async () => {
+			const res = await fetch("http://localhost:8000/book/find", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					query: query,
+				}),
+			});
 
-            <div className="book-list">
-                {resultStatus == "loading" ? (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            height: "100%",
-                        }}
-                    >
-                        <Bouncy color="#454d30" />
-                    </div>
-                ) : (
-                    <ul>
-                        {results
-                            ? Object.values(results).map((result, index) => (
-                                  <li key={result.key || index}>
-                                    <BookItem shelves={shelves} bookKey={result.key} title={result.title} author={result.author} coverID={result.coverID} coverURL={result.coverURL}/>
-                                  </li>
-                              ))
-                            : null}
-                    </ul>
-                )}
-            </div>
-        </div>
-    );
+			const data = await res.json();
+			return data.result;
+		},
+        // Won't run automatically, only when the final query is not empty and greater than 3 characters
+		enabled: !!query && query.length >= 3,
+	});
+
+	return (
+		<div className="find-book">
+			<h1>Find A Book</h1>
+			<form>
+				<input
+					type="text"
+					id="title"
+					placeholder="Enter book title or author"
+					onChange={(event) => {
+						setInput(event.target.value);
+					}}
+				/>
+			</form>
+
+			<div className="book-list">
+				{isLoading ? (
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+							height: "100%",
+						}}
+					>
+						<Bouncy color="#454d30" />
+					</div>
+				) : (
+					<ul>
+						{results
+							? Object.values(results).map((result, index) => (
+									<li key={result.key || index}>
+										<BookItem
+											shelves={shelves}
+											bookKey={result.key}
+											title={result.title}
+											author={result.author}
+											coverID={result.coverID}
+											coverURL={result.coverURL}
+										/>
+									</li>
+								))
+							: null}
+					</ul>
+				)}
+			</div>
+		</div>
+	);
 }
 
 export default FindBook;
