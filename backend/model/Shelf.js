@@ -14,7 +14,10 @@ const shelfSchema = new Schema({
         {
             key: String,
             title: String,
-            cover: String
+            coverID: String,
+            coverURL: String,
+            author: [String],
+            publishYear: Number
         }
     ],
 });

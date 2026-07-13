@@ -77,6 +77,7 @@ function FindBook({ shelves }) {
 											author={result.author}
 											coverID={result.coverID}
 											coverURL={result.coverURL}
+											publishYear={result.publishYear}
 										/>
 									</li>
 								))

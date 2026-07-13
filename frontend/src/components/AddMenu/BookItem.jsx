@@ -1,10 +1,10 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/Menu.css";
 import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
+function BookItem({ shelves, bookKey, title, author, coverID, coverURL, publishYear }) {
     const [cover, setCover] = useState(bookPlaceholder);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [selectedShelves, setSelectedShelves] = useState([]);
@@ -74,7 +74,10 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
                 shelves: selectedShelves,
                 bookKey: bookKey,
                 title: title,
-                cover: coverURL
+                author: author,
+                coverID: coverID,
+                coverURL: coverURL,
+                publishYear: publishYear
             }),
         });
 
@@ -136,4 +139,4 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL }) {
     );
 }
 
-export default memo(BookItem);
+export default BookItem;

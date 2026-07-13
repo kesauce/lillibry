@@ -132,7 +132,7 @@ router.get("/check", async (req, res) => {
 router.post("/add", async (req, res) => {
     try {
         // Grab the given data
-        const { shelves, bookKey, title, cover } = req.body;
+        const { shelves, bookKey, title, author, coverID, coverURL, publishYear } = req.body;
 
         // Check the user's cookies and ensure that the server is making a shelf for correct user
         if (!req.headers.authorization) {
@@ -168,7 +168,10 @@ router.post("/add", async (req, res) => {
                                     books: {
                                         key: bookKey,
                                         title: title,
-                                        cover: cover,
+                                        author: author,
+                                        coverID: coverID,
+                                        coverURL: coverURL,
+                                        publishYear: publishYear
                                     },
                                 },
                             },
