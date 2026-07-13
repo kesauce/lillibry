@@ -1,6 +1,6 @@
 import Book from "./Book.jsx";
 
-function Shelf({ name, books }) {
+function Shelf({ name, books, setSelectedBook}) {
     return (
         <div className="bg-gray-orange pt-8 pb-8 px-4 sm:px-8 w-full sm:w-4/5 h-full mx-auto mt-2 mb-4">
             <div
@@ -19,6 +19,7 @@ function Shelf({ name, books }) {
                         title={book.title}
                         bookKey={book.key}
                         cover={book.cover}
+                        onClick={() => setSelectedBook(book)}
                     />
                 ))}
             </div>
