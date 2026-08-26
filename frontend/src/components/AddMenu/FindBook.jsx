@@ -4,7 +4,7 @@ import { Bouncy } from "ldrs/react";
 import "../../styles/Menu.css";
 import BookItem from "./BookItem";
 
-function FindBook({ shelves }) {
+function FindBook({ shelves, onBookAdded }) {
 	const [input, setInput] = useState("");
 	const [query, setQuery] = useState("");
 
@@ -78,6 +78,7 @@ function FindBook({ shelves }) {
 											coverID={result.coverID}
 											coverURL={result.coverURL}
 											publishYear={result.publishYear}
+											onBookAdded={onBookAdded}
 										/>
 									</li>
 								))

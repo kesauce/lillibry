@@ -65,6 +65,7 @@ function Homepage() {
 									ref={addMenuRef}
 									shelves={shelves}
 									onShelfAdded={fetchShelves}
+									onBookAdded={fetchShelves}
 								/>
 							</motion.div>
 						) : null}

@@ -4,7 +4,7 @@ import bookPlaceholder from "../../assets/images/book_placeholder.png";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-function BookItem({ shelves, bookKey, title, author, coverID, coverURL, publishYear }) {
+function BookItem({ shelves, bookKey, title, author, coverID, coverURL, publishYear, onBookAdded }) {
     const [cover, setCover] = useState(bookPlaceholder);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [selectedShelves, setSelectedShelves] = useState([]);
@@ -84,6 +84,7 @@ function BookItem({ shelves, bookKey, title, author, coverID, coverURL, publishY
         //Extract the response and add it to result
         if (res.status == 200) {
             setSelectedShelves(selectedOptions);
+            onBookAdded?.();
         }
     };
 
