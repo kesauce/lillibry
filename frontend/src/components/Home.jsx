@@ -35,24 +35,34 @@ function Homepage() {
 		fetchShelves();
 	}, []);
 
+	// Only one popup (AddMenu or BookDetails) should be open at a time
+	const openMenu = (menu) => {
+		setSelectedBook(null);
+		setActiveMenu(menu);
+	};
+
+	const openBook = (book) => {
+		setActiveMenu(null);
+		setSelectedBook(book);
+	};
+
 	return (
 		<div className="homepage">
-			<Nav activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-			<Shelves shelves={shelves} setSelectedBook={setSelectedBook} />
+			<Nav activeMenu={activeMenu} setActiveMenu={openMenu} />
+			<Shelves shelves={shelves} setSelectedBook={openBook} />
 			<AnimatePresence>
-				{" "}
-				{/* Needs to watch its children for it to work */}
-				{activeMenu == null ? null : (
-					<div className="backdrop">
-						{activeMenu == "add" ? (
-							<motion.div
-								key="modal"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{
-									duration: 0.2,
-								}}
+				{activeMenu != null && (
+					<motion.div
+						key="add-backdrop"
+						className="backdrop"
+						onClick={() => setActiveMenu(null)}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
+					>
+						{activeMenu == "add" && (
+							<div
 								style={{
 									position: "fixed",
 									top: "50%",
@@ -60,6 +70,7 @@ function Homepage() {
 									transform: "translate(-50%, -45%)",
 									zIndex: 2,
 								}}
+								onClick={(e) => e.stopPropagation()}
 							>
 								<AddMenu
 									ref={addMenuRef}
@@ -67,21 +78,24 @@ function Homepage() {
 									onShelfAdded={fetchShelves}
 									onBookAdded={fetchShelves}
 								/>
-							</motion.div>
-						) : null}
-					</div>
+							</div>
+						)}
+					</motion.div>
 				)}
 			</AnimatePresence>
 
 			<AnimatePresence>
 				{selectedBook && (
-					<div className="backdrop" onClick={() => setSelectedBook(null)}>
-						<motion.div
-							key="book-modal"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.2 }}
+					<motion.div
+						key="book-backdrop"
+						className="backdrop"
+						onClick={() => setSelectedBook(null)}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.2 }}
+					>
+						<div
 							style={{
 								position: "fixed",
 								top: "50%",
@@ -97,8 +111,8 @@ function Homepage() {
 								onClose={() => setSelectedBook(null)}
 								onShelvesChanged={fetchShelves}
 							/>
-						</motion.div>
-					</div>
+						</div>
+					</motion.div>
 				)}
 			</AnimatePresence>
 		</div>
