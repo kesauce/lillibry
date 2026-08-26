@@ -21,3 +21,15 @@
 .shelves .swiper {
     padding-bottom: 2rem !important;
 }
+
+/* Force a consistent slide width so a single shelf isn't squished by Swiper's
+   locked-slider sizing when there aren't enough slides to fill slidesPerView. */
+.shelves .swiper-slide {
+    width: 100% !important;
+}
+
+@media (min-width: 700px) {
+    .shelves .swiper-slide {
+        width: calc(100% / 1.4) !important;
+    }
+}

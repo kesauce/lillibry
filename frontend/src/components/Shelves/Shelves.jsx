@@ -10,6 +10,7 @@ function Shelves({ shelves, setSelectedBook }) {
 	return (
 		<div className="shelves h-4/5 flex justify-center items-center">
 			<Swiper
+				className="w-full"
 				modules={[Navigation, Pagination]}
 				cssMode={true}
 				// loop={true}
@@ -17,6 +18,7 @@ function Shelves({ shelves, setSelectedBook }) {
 				navigation={false}
 				slidesPerView={1.4}
 				centeredSlides={true}
+				centerInsufficientSlides={true}
 				// spaceBetween={24}
 				breakpoints={{
 					0: { slidesPerView: 1 },
