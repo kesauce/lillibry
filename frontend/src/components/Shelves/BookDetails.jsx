@@ -5,13 +5,28 @@ function BookDetails({ book, onClose }) {
 				<img
 					id="close-icon"
 					src="../../../src/assets/icons/cancel.svg"
-					className="w-5 cursor-pointer"
+					className="w-7 cursor-pointer"
 				/>
 			</button>
-			<div className="font-radley text-ebony">
-				<h2 className="text-2xl">{book.title}</h2>
-				<h2 className="text-xl">Author:{book.author}
-				</h2>
+			<div className="font-radley text-ebony w-200 h-150 flex gap-4">
+				{book.coverURL && (
+					<img
+						src={book.coverURL}
+						alt={book.title}
+						className="w-1/2 h-auto object-contain"
+					/>
+				)}
+				<div>
+					<h1 className="text-4xl font-bold">{book.title}</h1>
+					<h1 className="text-xl italic">
+						Author: {book.author?.join(", ")}
+					</h1>
+					{book.publishYear && (
+						<h1 className="text-xl italic">
+							Published: {book.publishYear}
+						</h1>
+					)}
+				</div>
 			</div>
 		</div>
 	);
