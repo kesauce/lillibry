@@ -92,7 +92,9 @@ function Homepage() {
 						>
 							<BookDetails
 								book={selectedBook}
+								shelves={shelves}
 								onClose={() => setSelectedBook(null)}
+								onShelvesChanged={fetchShelves}
 							/>
 						</motion.div>
 					</div>

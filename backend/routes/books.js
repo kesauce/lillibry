@@ -159,8 +159,11 @@ router.post("/add", async (req, res) => {
 
                 // Map through the userShelves and make an array of promises - then run it (foreach doesn't wait for promises)
                 const promiseArray = userShelves.map(async (userShelf) => {
-                    // If this user shelf is included in the selected shelves then add the book
-                    if (shelves.includes(userShelf.name)) {
+                    // If this user shelf is included in the selected shelves then add the book - but only if it isn't already there, otherwise it creates a duplicate entry
+                    if (
+                        shelves.includes(userShelf.name) &&
+                        !userShelf.books.some((b) => b.key === bookKey)
+                    ) {
                         await Shelf.updateOne(
                             { owner: userId, name: userShelf.name },
                             {
@@ -178,7 +181,7 @@ router.post("/add", async (req, res) => {
                         );
                     }
                     // Remove that book from the shelf if it exists - because it's not included in the selected shelves
-                    else if (userShelf.books.some((b) => b.key === bookKey)) {
+                    else if (!shelves.includes(userShelf.name) && userShelf.books.some((b) => b.key === bookKey)) {
                         await Shelf.updateOne(
                             { owner: userId, name: userShelf.name },
                             { $pull: { books: { key: bookKey } } },
